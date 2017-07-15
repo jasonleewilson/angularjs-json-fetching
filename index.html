@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular.js JSON Fetching Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="https://use.fontawesome.com/e0a22a0e3f.js"></script>
+    <script>
+      var countryApp = angular.module('countryApp', []);
+      countryApp.controller('CountryCtrl', function ($scope, $http){
+        $http.get('https://api.coinmarketcap.com/v1/ticker/').success(function(data) {
+          $scope.countries = data;
+        });
+        $scope.orderByField = 'rank*1';
+        $scope.reverseSort = false;
+      });
+    </script>
+
+    <style>
+      body {background: #F2F2F2;}
+      .label {color:#333;}
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+    	<div ng-app="countryApp" ng-controller="CountryCtrl">
+        <br><br>
+        <span class="label">Ordered By: {{orderByField}}, Reverse Sort: {{reverseSort}}</span><br><br>
+        Search:<input ng-model="query" type="text"/><br><br>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th><a href="" ng-click="orderByField = 'name'; reverseSort = !reverseSort">name <span ng-show="orderByField == 'name'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'symbol'; reverseSort = !reverseSort">symbol <span ng-show="orderByField == 'symbol'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'rank*1'; reverseSort = !reverseSort">rank <span ng-show="orderByField == 'rank*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'price_usd*1'; reverseSort = !reverseSort">price_usd <span ng-show="orderByField == 'price_usd*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'price_btc*1'; reverseSort = !reverseSort">price_btc <span ng-show="orderByField == 'price_btc*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'market_cap_usd*1'; reverseSort = !reverseSort">market_cap_usd <span ng-show="orderByField == 'market_cap_usd*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'percent_change_24h*1'; reverseSort = !reverseSort">percent_change_24h <span ng-show="orderByField == 'percent_change_24h*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+              <th><a href="" ng-click="orderByField = 'percent_change_7d*1'; reverseSort = !reverseSort">percent_change_7d <span ng-show="orderByField == 'percent_change_7d*1'"><i class="fa fa-angle-down" aria-hidden="true" ng-show="!reverseSort"></i><i class="fa fa-angle-up" aria-hidden="true" ng-show="reverseSort"></i></span></a></th>
+
+              
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="country in countries | filter:query | orderBy:orderByField:reverseSort">
+              <td>{{country.name}}</td>
+              <td>{{country.symbol}}</td>
+              <td>{{country.rank | number}}</td>
+              <td>{{country.price_usd}}</td>
+              <td>{{country.price_btc}}</td>
+              <td>{{country.market_cap_usd}}</td>
+              <td>{{country.percent_change_24h}}</td>
+              <td>{{country.percent_change_7d}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
