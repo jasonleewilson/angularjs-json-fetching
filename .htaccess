@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^Bitcoin[/]?$ coin/bitcoin.html
