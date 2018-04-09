@@ -4,7 +4,7 @@ $('.footable').footable({
 }
 }); 
 
-$( ".night-button" ).click(function() {
+$( ".btn-night" ).click(function() {
   $( "body" ).toggleClass('night-mode');
 });
 
