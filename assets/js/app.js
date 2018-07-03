@@ -1,4 +1,4 @@
-var currentpriceApp = angular.module('currentpriceApp', ['ui.bootstrap']);
+var currentpriceApp = angular.module('currentpriceApp', ['ui.bootstrap', 'ngRoute']);
 currentpriceApp.controller('currentpriceCtrl', function ($scope, $http){
 	$http.get('https://api.coinmarketcap.com/v1/ticker/?limit=0').success(function(data) {
 		$scope.crypto = data;
@@ -36,3 +36,14 @@ currentpriceApp.controller('currentpriceCtrl', function ($scope, $http){
 //            template: 'does not exists'
 //        });
 //});
+
+currentpriceApp.config(function($routeProvider){
+  $routeProvider.when('/', {
+    template: '<h1>Home Page</h1>',
+    //controller:'currentpriceCtrl',
+  }).when('/about', {
+    template: '<h1>About page</h1>'
+  }).otherwise({
+    redirectTo:'/' 
+  })
+})
